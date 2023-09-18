@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %} - mostDistinctCountries{% endblock %}
+{% block content %}
+
+{% if message %}
+  <p><h3> {{message}} </h3></p>
+{% endif %}
+
+{% if table %}
+    <script type="text/javascript" src="/static/js/tables.js"></script>
+     <table id="mostDistinctTable" class="table table-condensed  table-bordered table-hover table-striped" cellspacing="0" width="100%">
+         <thead>
+            <tr>
+                <th>NetID</th>
+                <th>Domain</th>
+                <th>Number of Countries Using NetID</th>
+            </tr>
+        </thead>
+      <tbody>       
+     {% for row in table %}
+         <tr>
+                <td>
+                    <!-- NetID button -->
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                       {{ row[0] }}
+                      </button>
+                      <ul class="dropdown-menu" role="menu" >
+                          <!-- <li><a id="copyNetID" action="copy" actionObject="netid" netid="{{row[0]}}" href="#">Copy NetID</a></li> -->
+                          <li><a id="searchNetID"  actionObject="netid" netid="{{row[0]}}" href="#">Search NetID</a></li>
+                          <li><a id="lookupNetID"  actionObject="netid" netid="{{row[0]}}" href="#">Lookup NetID</a></li>
+                          <li class="disabled hidden">><a id="lookupNetID"  actionObject="netid" netid="{{row[0]}}" href="#">Queue Audit</a></li>
+                          <li class="disabled hidden"><a id="disableNetID" actionObject="netid" netid="{{row[0]}}" href="#">Disable NetID</a></li>
+                          <li class="disabled hidden"><a id="enableNetID"  actionObject="netid" netid="{{row[0]}}" href="#">Enable NetID</a></li>
+                      </ul>
+                    </div>
+                </td>
+
+              <!-- Google Domain -->
+              <td>{{row[1]}} </td>
+
+              <!-- Event Count -->
+              <td>{{row[2]}} </td>
+         </tr>
+     {% endfor %}
+      </tbody>
+     </table>
+{% endif %}
+
+{% endblock %}
+

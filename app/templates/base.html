@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block head %}
+            <title>gAudit {% block title %}{% endblock %}</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="description" content="gAudit detects suspicious security events in Google Apps Domains">
+            <meta name="keywords" content="gAudit, Insomniac Technology, Google Audit, Google Audit Service,
+                    Security Alert for your Google Apps Domain, disabled user, Google security alert, Google Apps
+                     Domain, Important: Security Alert, automated security notification from Google">
+            <meta name="author" content="Insomniac.Technology">
+            <meta name="copyright" content="All Rights Reserved. Insomniac Technology 2015">
+            <meta charset="utf-8">
+
+            <!-- Local compiled jquery -->
+            <script src="/static/js/jquery.min.js"></script>
+
+             <!-- Local compiled and minified CSS -->
+            <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+
+            <!-- Optional theme -->
+            <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-theme.min.css">
+
+            <!-- Local compiled and minified JavaScript -->
+            <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+
+            <script type="text/javascript" charset="utf8" src="/static/js/jquery.dataTables.min.js"></script>
+            <script type="text/javascript" language="javascript" src="/static/js/dataTables.bootstrap.js"></script>
+            <script type="text/javascript" language="javascript" src="/static/js/googleAnalytics.js"></script>
+            <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}">
+        {% endblock %}
+    </head>
+
+    <body>
+        {% block navbar %}
+            <nav class="navbar navbar-inverse" role="navigation">
+                <div class="container container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 pull-left">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                        data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="#">gAudit</a>
+                            </div>
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                    <li class="active">
+                                        {% if current_user.isAnonymous() %}
+                                            <li><a href="/about">About</a></li>
+                                            <li><a href="/auth/register">Register</a></li>
+                                            <li><a href="/auth/login">Login</a></li>
+                                        {% endif %}
+
+                                        {% if not current_user.isAnonymous()  and not current_user.isDisabled() %}
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions<b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    <li role="presentation" class="divider"></li>
+                                                    <li role="presentation" class="dropdown-header">Correlation</li>
+                                                        <li class="disabled"><a href="#">Add/Delete Known Bad Addresses</a></li> <!-- Remember to make selected bad lists optional -->
+                                                        <li class="disabled"><a href="#">Add/Delete Malicious Forwarding Email</a></li>
+                                                        <li class="disabled"><a href="#">Add/Delete Net Blocks</a></li>
+                                                        <li class="disabled"><a href="#">Upload Malicious List</a></li>
+                                                        <li class="disabled"><a href="#">Upload White List</a></li>
+                                                    <li role="presentation" class="divider"></li>
+                                                    <li role="presentation" class="dropdown-header">Threats</li>
+                                                        <li class="disabled"><a href="#">Add Name Watch</a></li>
+                                                    <li role="presentation" class="divider"></li>
+                                                    <li role="presentation" class="dropdown-header">Account</li>
+                                                    <!-- <li class="disabled"><a href="/#">Update Domain Users</a></li> -->
+                                                        <!-- <li><a href="/#"></a></li> -->
+                                                        <li><a href="/auth/authorizeGoogle">Authorize gAudit in Google</a></li>
+                                                        <li><a href="/auth/change-password">Change Password</a></li>
+                                                        {% if not current_user.isConfirmed() %}
+                                                            <li><a href="/auth/confirm">Resend Confirmation </a></li>
+                                                        {% endif %}
+                                                        <li><a href="/auth/logout">Logout</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">eDiscovery<b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    <li role="presentation" class="divider"></li>
+                                                    <li role="presentation" class="dropdown-header">Email</li>
+                                                        <li><a href="/retainEmail">Retain Email</a></li>
+                                                        <li><a href="/viewAudits">View Audits</a></li>
+                                                        <li><a href="#">Options</a></li>
+                                                    <li role="presentation" class="divider"></li>
+                                                    <li role="presentation" class="dropdown-header">Drive</li>
+                                                        <li class="disabled"><a href="/#">Audit Users</a></li>
+                                                        <li class="disabled"><a href="/#">Search for Keywords</a></li>
+                                                        <li class="disabled"><a href="/#">View External Shares</a></li>
+                                                        <li class="disabled"><a href="/#">Sensitive Data</a></li>
+                                                </ul>
+                                            </li>
+
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
+                                            <ul class="dropdown-menu">
+                                                    <li role="presentation" class="divider"></li>
+                                                    <li role="presentation" class="dropdown-header">Suspicious Activity</li>
+                                                    <li><a href="/knownBad">Known Bad</a></li>
+                                                    <li><a href="/mostActiveForeignIPs">mostActiveForeignIPs</a></li>
+                                                    <li><a href="/mostDistinctCountries">mostDistinctCountries</a></li>
+                                                    <li><a href="/mostActiveForeignCountries">mostActiveForeignCountries</a></li>
+                                                    <li class="disabled"><a href="/emailForwards">Emails with Multiple Forwarding Accounts</a></li>
+                                                <li role="presentation" class="divider"></li>
+                                                <li role="presentation" class="dropdown-header">Domain Info</li>
+                                                    <li><a href="#">View Users</a></li>
+                                                    <li><a href="#">Detailed Users Audits</a></li>
+                                                <li role="presentation" class="divider"></li>
+                                                <li role="presentation" class="dropdown-header disabled">Watch Lists</li>
+                                                    <li class="disabled"><a href="#">My Country Watch List</a></li>
+                                                    <li class="disabled"><a href="#">My Username Watch List</a></li>
+                                                    <li class="disabled"><a href="#">My IP Watch List</a></li>
+                                                    <li class="disabled"><a href="#">Edit Directory Link</a></li>
+                                            </ul>
+                                        </li>
+
+                                        {% endif %}
+
+                                        {% if current_user.isAdmin() and not current_user.isDisabled() %}
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="/admin">Admin</a></li>
+                                                    <li><a href="/viewUserInfo">View User Info</a></li>
+                                                    <li><a href="/admin/userview/">Manage Users</a></li>
+                                                </ul>
+                                            </li> <!-- ends Admin dropdown-->
+
+                                        {% endif %}
+
+                                </ul>
+                            </div> <!-- end navbar collapse -->
+                        </div> <!-- end left nav col -->
+
+                        {% if not current_user.isAnonymous()  and not current_user.isDisabled() %}
+                            <div class="col-md-6 pull-right" style="vertical-align: middle">
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2" style="vertical-align: middle">
+                                    <form id="navSearch" name="navSearch" class="navbar-form  pull-right"  role="search" method="POST" action="/search?">
+                                        <div class="form-group pull-right">
+                                            <select class="form-control input-sm" name="field" id="field">
+                                                <option value="NetID">Username</option>
+                                                <option value="IP">IP</option>
+                                                <option value="countryCode">Country Code</option>
+                                            </select>
+                                            <input type="text" class="form-control" placeholder="Search" id="search_value" name="search_value">
+                                            <button type="submit" class="btn btn-default btn-sm ">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div> <!-- end nav right search form -->
+                        {%  endif %}
+                    </div><!-- row -->
+                </div> <!-- container fluid -->
+            </nav>
+        {% endblock %}
+
+        <div id="alert_placeholder"> <!-- Placeholder --> </div>
+
+        <div class="container page">
+            <div class="content">
+                {% block content %}
+                    {% if isProd == True %}
+                        <h1>These Blocks are LIVE on Production NGFW </h1>
+                    {% endif %}
+
+                    {% with messages = get_flashed_messages() %}
+                        <ul class=flashes>
+                            {% if messages %}
+                                <div class="alert alert-warning alert-dismissible" role="alert">
+                                    <!--
+                                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span>
+                                    <span class="sr-only">Close</span></button>-->
+                                    {% for message in messages %}
+                                        <li>{{ message }}</li>
+                                    {% endfor %}
+                                </div> <!-- ends alert-->
+                            {% endif %}
+                        </ul>
+                    {% endwith %}
+                {% endblock %}
+            </div> <!-- ends content-->
+        </div> <!-- ends container page-->
+        <hr><br>
+    </body>
+
+    {% block footer %}
+        <footer class="footer">
+            {% if not current_user.isAnonymous() %}
+                <div class="row disabled small">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">User:  {{ current_user.email }} (<a href="/auth/logout">logout</a>)</div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">Authorized Domains: {{ current_user.getAuthorizedDomains() }} </div>
+                </div><br>
+            {% endif %}
+            <div class="row disabled small">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <center><small><b>gAudit Service by Insomniac</b><br>Copyright 2015. All Rights Reserved.</small></center>
+                </div>
+            </div>
+        </footer>
+    {% endblock %}
+</html>

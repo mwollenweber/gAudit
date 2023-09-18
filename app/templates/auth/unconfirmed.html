@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+
+{% block title %}gAudit- Account Not Approved{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>
+        Hello, {{ current_user.fName }}!
+    </h1>
+    <h3>Your account isn't approved.</h3>
+    <p>
+        Before you can access this site you need to confirm your email address.
+        Check your inbox, you should have received an email with a confirmation link.
+        After your email address is confirmed, an administrator must review and approve
+        your account. Once this is done you will receive a note from an administrator.
+    </p>
+
+    <p>
+        After your email address is confirmed, Insomniac must approve your account. Generally this can be done within a
+        day. If you have any problems please email gaudit@insomniac.technology
+
+    </p>
+
+
+    <p>
+        Need another confirmation email?
+        <a href="{{ url_for('auth.resend_confirmation') }}">Click here</a>
+    </p>
+</div>
+{% endblock %}

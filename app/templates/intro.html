@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %} - Home{% endblock %}
+{% block content %}
+
+
+
+{% if message %}
+  <p><h3> {{message}} </h3></p>
+{% endif %}
+
+{% if table %}
+     <table class="table table-striped">
+     <ul>
+     {% for row in table %}
+     <tr>
+          {% for cell in row %}
+            <td>
+            
+            <!-- Figure out the cell type if is IP, netid or, other that can be searched-->
+
+            <!-- Single button -->
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+               {{ cell }} 
+               
+              
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">White List</a></li>
+                <li><a href="#">Block</a></li>
+                <li><a href="#">Whois</a></li>
+                <li><a href="#">Search</a></li>
+                
+              </ul>
+            </div>
+ 
+            
+            </td>
+          {% endfor %}
+     </tr>
+     {% endfor %}
+     </ul>
+     </table>
+{% endif %}
+
+{% endblock %}
+

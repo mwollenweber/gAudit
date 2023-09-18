@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %} Authorize Google{% endblock %}
+{% block content %}
+
+<h2> Please Authorize gAudit</h2>
+    <p><br>
+    To audit your organization's Google activity, a domain administrator must authorize gAudit to access the necessary data.
+    </p><br><br>
+
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"><a href="{{auth_uri}}" role="button" class="btn btn-success btn-lg">Authorize gAudit</a></div>
+
+    </div>
+
+
+
+    <br><br><br><br><br>
+
+
+{% endblock %}
+

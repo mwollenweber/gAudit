@@ -1,0 +1,13 @@
+Dear {{ user.fName }},
+
+Welcome to Insomniac's gAudit Service
+
+To confirm your email address please click on the following link:
+
+{{ url_for('auth.confirm', token=token, _external=True) }}
+
+Sincerely,
+
+-Insomniac
+
+Note: replies to this email address are not monitored.

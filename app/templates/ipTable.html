@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %} - IP Results{% endblock %}
+{% block content %}
+
+    {% if message %}
+      <p><h3> {{message}} </h3></p>
+    {% endif %}
+
+    {% if table %}
+        <script type="text/javascript" src="/static/js/tables.js"></script>
+         <table id="ipTable" class="table table-striped" cellspacing="0" width="100%">
+             <thead>
+                <tr>
+                    <th>IP</th>
+                    <th>Country Code</th>
+                    <th>Count</th>
+                </tr>
+              </thead>
+
+             <tbody>
+             {% for row in table %}
+                 <tr>
+                      <!-- IP Address -->
+                      <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                             {{ row[0] }}
+                            </button>
+                            <ul class="dropdown-menu" role="menu" >
+                                <li><a id="searchIP"  actionObject="IP" ip="{{row[0]}}" href="#">Search for IP</a></li>
+                                <li><a target="_blank"
+                                       href="http://centralops.net/co/DomainDossier.aspx?dom_whois=true&dom_dns=true&traceroute=true&net_whois=true&svc_scan=true&addr={{row[3]}}">Central Ops</a></li>
+                                <li><a target="_blank" href="http://www.google.com/#q={{row[0]}}">Google</a></li>
+                                <li><a target="_blank"
+                                       href="https://www.virustotal.com/en/ip-address/
+                                                                    {{row[0]}}/information/">VirusTotal</a></li>
+                                <li><a target="_blank" href="https://www.mywot.com/en/scorecard/{{row[0]}}">WoT</a></li>
+                                <li><a target="_blank"
+                                       href="http://www.malwaredomainlist.com/mdl.php?search=
+                                                        {{row[0]}}&colsearch=All&quantity=50">MDL</a></li>
+
+                                <li class="disabled"><a id="whitelistIP" actionObject="ip" ip="{{row[0]}}"
+                                                        href="#">White List IP</a></li>
+                                <li class="disabled"><a id="blacklistIP" actionObject="ip" ip="{{row[0]}}"
+                                                        href="#">Black List IP</a></li>
+                                <li class="disabled"><a id="blocklistIP" actionObject="ip" ip="{{row[0]}}"
+                                                        href="#">Add to Block List</a></li>
+                            </ul>
+                        </div>
+                      </td>
+
+                      <!-- Country Code -->
+                      <td>{{row[1]}} </td>
+
+                      <!-- Count -->
+                      <td>{{row[2]}} </td>
+                 </tr>
+             {% endfor %}
+             </tbody>
+         </table>
+    {% endif %}
+
+{% endblock %}
+

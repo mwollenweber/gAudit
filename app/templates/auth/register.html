@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %} Google Audit Service Registration {% endblock %}
+
+
+{% block content %}
+<div class='page-header'>
+    <h1>Please Register </h1>
+</div>
+
+<!-- put in some type of div-->
+
+<div class="row">
+    <div class="col-md-6">
+        {{ wtf.quick_form(form) }}
+    </div>
+
+</div>
+
+{% endblock %}

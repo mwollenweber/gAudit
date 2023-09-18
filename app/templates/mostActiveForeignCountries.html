@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %} - mostActiveForeignCountries{% endblock %}
+{% block content %}
+    {% if message %}
+      <p><h3> {{message}} </h3></p><br>
+    {% endif %}
+
+    {% if table %}
+         <table id="mostActiveForeignCountriesTable" name="mostActiveForeignCountriesTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Country Code</th>
+                    <th>Number of Logins</th>
+                </tr>
+            </thead>
+         {% for row in table %}
+             <tr>
+                    <td>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                              {{ row[0] }}
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                              <li><a id="countryCode"  actionObject="countryCode" countryCode="{{row[0]}}" href="#">Search by Country Code</a></li>
+                          </ul>
+                        </div>
+                    </td>
+
+                    <td>
+                        {{ row[1] }}
+                    </td>
+             </tr>
+         {% endfor %}
+         </table>
+    {% endif %}
+
+{% endblock %}
+

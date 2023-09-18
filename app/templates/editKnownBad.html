@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} - knownBad {% endblock %}
+{% block content %}
+    {% if message %}
+      <p><h3> {{message}} </h3></p>
+    {% endif %}
+
+    {% if table %}
+         <table id="example" class="table table-striped">
+             <thead>
+                <tr>
+                        <td>Netid</td>
+                        <td>Domain</td>
+                        <td>IP Address</td>
+                </tr>
+             </thead>
+             <tbody>
+                 {% for row in table %}
+                     <tr>
+                          {% for cell in row %}
+                            <td>
+                               {{ cell }}
+                            </td>
+                          {% endfor %}
+                     </tr>
+                 {% endfor %}
+             </tbody>
+         </table>
+    {% endif %}
+
+{% endblock %}
+

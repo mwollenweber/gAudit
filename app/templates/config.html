@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} - Config{% endblock %}
+<!--
+GPG config
+    1. Upload public key
+    2. Set Password
+    3. Autogenerate
+    4. Don't decrypt.
+
+gDrive
+    need name of root folder (if not default)
+
+    Shares
+        ** Skip sharing for now let the admin share the root folder manually **
+
+--->
+
+
+
+{% block content %}
+    {% if message %}
+        <p><h3> {{message}} </h3></p>
+    {% endif %}
+
+
+{% endblock %}
+

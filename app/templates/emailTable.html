@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %} - Email Audits{% endblock %}
+{% block content %}
+
+
+    {% if message %}
+      <p><h3> {{message}} </h3></p>
+    {% endif %}
+
+    <script src="/static/js/retain.js"></script>
+
+    <div class="container-fluid">
+        <div class="col-md-10">
+                <table id="emailAuditTable" class="table table-striped" cellspacing="0" width="100%">
+                     <thead>
+                        <tr>
+                            <th>RequestID</th>
+                            <th>Request Date </th>
+                            <th>First Name </th>
+                            <th>Last Name </th>
+                            <th>Requestor</th>
+                            <th>Account Retained</th>
+                            <th>beginDate</th>
+                            <th>endDate</th>
+                            <th>completedDate</th>
+                            <th>Status</th>
+                            <th>contentType</th>
+                            <th>includeDeleted</th>
+                        </tr>
+                     </thead>
+                </table>
+        </div>
+    </div>
+
+
+     <br><br><br><br> <br><br><br><br>
+
+{% endblock %}
