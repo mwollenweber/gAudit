@@ -5,7 +5,7 @@ All Rights Reserved
 mjw@insomniac.tech
 
 
-You shouldn't use this code unless you really know what you're doing. It is unfinished!
+You shouldn't use this code unless you really know what you're doing. It is unfinished! It hasn't been updated since 2016
 
 
 Dependencies:
